@@ -1,0 +1,7 @@
+D:\itStep\itstep_homework&class\C#\homework\hw(01_intro)\hw(01_intro)\bin\Debug\hw(01_intro).exe.config
+D:\itStep\itstep_homework&class\C#\homework\hw(01_intro)\hw(01_intro)\bin\Debug\hw(01_intro).exe
+D:\itStep\itstep_homework&class\C#\homework\hw(01_intro)\hw(01_intro)\bin\Debug\hw(01_intro).pdb
+D:\itStep\itstep_homework&class\C#\homework\hw(01_intro)\hw(01_intro)\obj\Debug\hw(01_intro).csproj.AssemblyReference.cache
+D:\itStep\itstep_homework&class\C#\homework\hw(01_intro)\hw(01_intro)\obj\Debug\hw(01_intro).csproj.CoreCompileInputs.cache
+D:\itStep\itstep_homework&class\C#\homework\hw(01_intro)\hw(01_intro)\obj\Debug\hw(01_intro).exe
+D:\itStep\itstep_homework&class\C#\homework\hw(01_intro)\hw(01_intro)\obj\Debug\hw(01_intro).pdb
