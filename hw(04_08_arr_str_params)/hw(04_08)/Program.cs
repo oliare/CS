@@ -11,8 +11,8 @@ namespace hw_04_08_
     {
         static void Main(string[] args)
         {
-    // Mult/Jugged ARRAYS
-
+            // Mult/Jagged ARRAYS
+            Console.WriteLine("\t\tMult/Jagged ARRAYS");
             int[][] arr = createJArray(4, 3);
             fillJArray(arr, 1, 30);
             printJArray(arr);
@@ -20,25 +20,34 @@ namespace hw_04_08_
             int[] newRow = new int[3];
             addRow(ref arr, newRow);
             printJArray(arr, "\nArray after adding the row to the end: ");
-            //delRowByIndex(arr, 3);
-            printJArray(arr, "\nArray after deleting the row by index: ");
 
             Up(arr, 3);
-            Console.WriteLine("\nІhifting the rows of the matrix up");
-            printJArray(arr);
-            Console.WriteLine("\nAfter shifting matrix rows down");
+            printJArray(arr, "\nAfter shifting matrix rows UP");
+
             Down(arr, 3);
-            printJArray(arr);
+            printJArray(arr, "\nAfter shifting matrix rows DOWN");
 
-    // METHODS
+            int index = 4;
+            delRowByIndex(ref arr, index);
+            printJArray(arr, $"\nArray after deleting the row by index [{index}] : ");
 
-            int[][] res = findMinMax(arr);
-            Console.WriteLine("Min: " + res[0][0]);
-            Console.WriteLine("Max: " + res[1][0]);
+            // METHODS
+            Console.WriteLine("\n\t\tMETHODS\nA method for finding the MIN and MAX in a jagged array ");
+            int min = 0;
+            int max = 0;
+            findMinMax(arr, ref min, ref max);
+            Console.WriteLine("Min: " + min + "\nMax: " + max);
+            Console.WriteLine();
 
-    // STRINGS
+            int[][] arr2 = create3DArray(3, 4);
+            fill3DArray(arr2);
+            print3DArray(arr2, "Filled 3D array:");
+            Console.WriteLine("\nThe sum of the elements of each subarray :");
+            Sum(arr2);
+
+            // STRINGS
             // 1
-            Console.Write("Enter some text: ");
+            Console.Write("\n\t\tSTRINGS\nEnter some text: ");
             string line = Console.ReadLine();
             Console.Write("Enter symbol to find: ");
             char symbol = char.Parse(Console.ReadLine());
@@ -69,11 +78,13 @@ namespace hw_04_08_
 
             // 2
             string text = "Lorem ipsum dolor sit amet consectetur";
+            Console.WriteLine($"Initial line: {text}");
             text = removeSymbol(text, 't');
-            Console.WriteLine($"Line: {text}");
-
+            Console.WriteLine($"Line after removing the specified characters: \n\t{text}");
+            Console.WriteLine();
             // 3
             string str = "I don’t know whether to delete this or rewrite it";
+            Console.WriteLine("TEXT: " + str);
             string abc = "abcdefghijklmnopqrstuvwxyz";
 
             foreach (char c in abc)
@@ -91,49 +102,40 @@ namespace hw_04_08_
             }
 
             // 4
-            //string program = @"
-            //using System;
+            string program = @"
+            using System;
 
-            //namespace test
-            //{
-            //    internal class Program
-            //    {
-            //        static void Main(string[] args)
-            //        {
-            //            Console.WriteLine(""Even numbers: "");
-            //            for (int i = 0; i <= 20; i++)
-            //            {
-            //                if (i % 2 == 0)
-            //                {
-            //                    Console.Write(i + ""\t"");
-            //                }
-            //            }
-            //        }
-            //    }
-            //}";
+            namespace test
+            {
+                internal class Program
+                {
+                    static void Main(string[] args)
+                    {
+                        Console.WriteLine(""Even numbers: "");
+                        for (int i = 0; i <= 20; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                Console.Write(i + ""\t"");
+                            }
+                        }
+                    }
+                }
+            }";
 
-            //string[] words = { "using", "System", "while","namespace", "internal",
-            //    "class", "static", "void", "string", "Console", "WriteLine", "for", 
-            //    "int", "if", "Write", "Main" };
-            //string[] splited = program.Split(new[]{ '.', ',', '\n', '\t', '(', ')', '{', '}', ';' });
+            string[] words = { "using", "System", "while","namespace", "internal",
+                "class", "static", "void", "string", "Console", "WriteLine", "for",
+                "int", "if", "Write", "Main" };
+            string[] splitted = program.Split(' ', '.', ',', '\n', '\t', '(', ')', '{', '}', ';');
 
-            //int[] count = new int[words.Length];
-            //for (int i = 0; i < words.Length; i++)
-            //{
-            //    count[i] = splited.Count(s => s == words[i]);
-            //}
+            Array.Sort(words);
+            foreach (var word in words)
+            {
+                int count = splitted.Count(s => s == word);
+                Console.WriteLine($"{word}: {count} times");
+            }
 
-            //Array.Sort(count, words);
-
-            //for (int i = 0; i < words.Length; i++)
-            //{
-            //    if (count[i] > 0)
-            //    {
-            //        Console.WriteLine($"{words[i]}: {count[i]}");
-            //    }
-            //}
-
-
+            
 
         }
         static void fillJArray(int[][] arr, int begin, int end)
@@ -197,15 +199,13 @@ namespace hw_04_08_
         {
             Array.Resize(ref matrix, matrix.Length + 1);
             matrix[matrix.Length - 1] = newRow;
-
         }
-
-        static void delRowByIndex(int[][] matrix, int index)
+        static void delRowByIndex(ref int[][] matrix, int index)
         {
             if (index >= 0 && index < matrix.Length)
             {
                 int[][] tmp = new int[matrix.Length - 1][];
-                for (int i = 0; i < matrix.Length; i++)
+                for (int i = 0; i < tmp.Length; i++)
                 {
                     if (i < index)
                     {
@@ -218,30 +218,67 @@ namespace hw_04_08_
                 }
                 matrix = tmp;
             }
-
         }
-
-        static int[][] findMinMax(int[][] arr)
+        //
+        static void findMinMax(int[][] arr, ref int min, ref int max)
         {
-            int min = arr[0].Min();
-            int max = arr[0].Max();
+            min = arr[0][0];
+            max = arr[0][0];
             for (int i = 0; i < arr.Length; i++)
             {
-                if (min > arr[i].Min())
+                for (int j = 0; j < arr[i].Length; j++)
                 {
-                    min = arr[i].Min();
-                }
-                if (max < arr[i].Max())
-                {
-                    max = arr[i].Max();
+                    if (arr[i][j] < min)
+                    {
+                        min = arr[i][j];
+                    }
+                    if (arr[i][j] > max)
+                    {
+                        max = arr[i][j];
+                    }
                 }
             }
-            int[][] res = new int[2][];
-            res[0] = new int[] { min };
-            res[1] = new int[] { max };
-
-            return res;
         }
+        static int[][] create3DArray(int row, int col)
+        {
+            int[][] arr = new int[row][];
+            for (int i = 0; i < row; i++)
+            {
+                arr[i] = new int[col];
+            }
+            return arr;
+        }
+        static void fill3DArray(int[][] arr)
+        {
+            Random random = new Random();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[i].Length; j++)
+                {
+                    arr[i][j] = random.Next(1, 50);
+                }
+            }
+        }
+        static void print3DArray(int[][] arr, string text)
+        {
+            Console.WriteLine(text);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[i].Length; j++)
+                {
+                    Console.Write($"{arr[i][j],-8}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Sum(int[][] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Console.WriteLine($"Sum in row {i + 1}: {arr[i].Sum()}");
+            }
+        }
+        //
         static string removeSymbol(string line, params char[] letters)
         {
             foreach (char c in letters)
