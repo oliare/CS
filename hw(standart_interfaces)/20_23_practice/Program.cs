@@ -14,9 +14,10 @@ namespace _20_23_practice
             Director d2 = new Director("David", "Lynch", 26, true, "some award", new DateTime(1946, 1, 20));
             Director d3 = new Director("Martin", "Scorsese", 23, true, "some award", new DateTime(1942, 4, 17));
 
+
             Movie m1 = new Movie("The Fabelmans ", "description", d1, "USA", 2022, 7.4, Genre.Drama);
             Movie m2 = new Movie("Eraserhead", "description", d2, "USA", 1977, 8.5, Genre.Fantasy);
-            Movie m3 = new Movie("Shutter Island", "description", d2, "USA", 2010, 8.6, Genre.Horror);
+            Movie m3 = new Movie("Shutter Island", "description", d3, "USA", 2010, 8.6, Genre.Horror);
 
             Cinema cinema = new Cinema { 
                 movies = new Movie[] { m1, m2, m3} 

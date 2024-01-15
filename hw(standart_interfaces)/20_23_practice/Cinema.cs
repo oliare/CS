@@ -16,7 +16,7 @@ namespace _20_23_practice
     internal class Cinema : IEnumerable
     {
         public Movie[] movies;
-
+        public string Address { get; set; }
         public IEnumerator GetEnumerator()
         {
             foreach (Movie item in movies)
@@ -28,7 +28,7 @@ namespace _20_23_practice
         {
             Array.Sort(movies);
         }
-        public void Sort(IComparer<Movie> comparer)
+        public void Sort(IComparer comparer)
         {
             Array.Sort(movies, comparer);
         }

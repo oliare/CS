@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _20_23_practice
 {
-    class Movie : IComparable<Movie>, ICloneable
+    class Movie : IComparable, ICloneable
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -33,9 +33,13 @@ namespace _20_23_practice
                 Country, Year, Rating, Genre);
             return m;
         }
-        public int CompareTo(Movie obj)
+        public int CompareTo(object obj)
         {
-            return Rating.CompareTo(obj.Rating);
+            if (obj is Movie)
+            {
+                return Rating.CompareTo((obj as Movie).Rating);
+            }
+            throw new NotImplementedException();
         }
         public override string ToString()
         {
@@ -43,18 +47,32 @@ namespace _20_23_practice
                 $"\nYear   : {Year}\nRating : {Rating}\nGenre  : {Genre}";
         }
     }
-    class CompareByRating : IComparer<Movie>
+    class CompareByRating : IComparer
     {
-        public int Compare(Movie x, Movie y)
+        public int Compare(object x, object y)
         {
-            return x.Rating.CompareTo(y.Rating);
+            if (x is Movie && y is Movie)
+            {
+                return (x as Movie).Rating.CompareTo((y as Movie).Rating);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
-    class CompareByYear : IComparer<Movie>
+    class CompareByYear : IComparer
     {
-        public int Compare(Movie x, Movie y)
+        public int Compare(object x, object y)
         {
-            return x.Year.CompareTo(y.Year);
+            if (x is Movie && y is Movie)
+            {
+                return (x as Movie).Year.CompareTo((y as Movie).Year);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
