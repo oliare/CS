@@ -10,10 +10,7 @@ namespace hw_collections_
     {
         static void Main(string[] args)
         {
-            Player p1 = new Player("Dima");
-            Player p2 = new Player("Tim");
-
-            Game game = new Game(p1, p2);
+            Game game = new Game("Dima", "Tim");
             game.HandingOutCards();
             game.ShufflingCards();
             game.StartGame();

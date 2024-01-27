@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace hw_collections_
 {
     class Game
     {
         public List<Player> players = new List<Player>();
-        public List<Card> deck = new List<Card>(36);
-
-        public Game(params Player[] players)
+        public List<Card> deck = new List<Card>();
+        public Game(params string[] person)
         {
-            this.players.AddRange(players);
+            foreach (var p in person)
+            {
+                players.Add(new Player(p));
+            }
             DeckCreation();
         }
         protected IEnumerable<Card> GenerateCards()
@@ -46,28 +50,34 @@ namespace hw_collections_
         public void HandingOutCards()
         {
             ShufflingCards();
-            int amount = 36 / players.Count;
-            for (int i = 0; i < amount; i++)
+            int div = 36 / players.Count;
+
+            for (int i = 0; i < div; i++)
             {
-                for (int j = 0; j < players.Count; j++)
+                foreach (var player in players)
                 {
-                    players[j].GetCard(deck[deck.Count - 1]);
-                    deck.RemoveAt(deck.Count - 1);
+                    if (deck.Any())
+                    {
+                        Card card = deck.Last();
+                        player.GetCard(card);
+                        deck.RemoveAt(deck.Count - 1);
+                    }
                 }
             }
         }
         public void Play()
         {
-            List<Card> list = players.Select(pl => pl.ShowCard()).ToList();
+            List<Card> list = players.Select(pl => pl.CheckCard()).ToList();
 
             Console.WriteLine(string.Join("\t\t", players.Select
                 (pl => $"{pl.Name} ({pl.cards.Count} cards)")));
 
             list.Sort();
+
             Card max = list[list.Count - 1];
             Console.Write($"\n\t{max}");
 
-            var winner = players.FirstOrDefault(pl => pl.Last == max);
+            var winner = players.FirstOrDefault(pl => pl.bottomCard == max);
             if (winner != null)
             {
                 Console.WriteLine($"\n\n\t{winner.Name} is leading");
@@ -82,7 +92,7 @@ namespace hw_collections_
                 (x => $"\t#{x.Name,-3}  --> {x.cards.Count,-22}\n")));
             while (GameOver())
                 Play();
-            Console.WriteLine("\n\n\t*************** GAME OVER ***************\n");
+            Console.WriteLine("\n  *************** GAME OVER ***************\n");
             IsWin();
         }
         public bool GameOver()
@@ -92,11 +102,13 @@ namespace hw_collections_
         public void IsWin()
         {
             foreach (var player in players)
+            {
                 if (player.cards.Count == 36)
                 {
                     Console.WriteLine(player.Name + " is the WINNER!!\n");
                     return;
                 }
+            }
         }
     }
 
@@ -104,35 +116,38 @@ namespace hw_collections_
     {
         public List<Card> cards = new List<Card>();
         public string Name { get; set; }
-        public Card Last { get; set; }
         public Player(string name)
         {
             Name = name;
+        }
+        public Card bottomCard { get; set; }
+        public Card CheckCard()
+        {
+            if (cards.Count > 0)
+            {
+                bottomCard = cards.First();
+                cards.RemoveAt(0);
+                return bottomCard;
+            }
+            return null;
         }
         public void GetCard(Card card)
         {
             cards.Add(card);
         }
-        public void GetCards(params Card[] cards)
+        public void GetCards(params Card[] arr)
         {
-            this.cards.AddRange(cards);
-        }
-        public Card ShowCard()
-        {
-            Card card = cards[0];
-            Last = card;
-            cards.RemoveAt(0);
-            return card;
+            cards.AddRange(arr);
         }
     }
     class Card : IComparable<Card>
     {
         public string Suit { get; set; }
         public string Rank { get; set; }
-        public Card(string suit, string type)
+        public Card(string suit, string rank)
         {
             Suit = suit;
-            Rank = type;
+            Rank = rank;
         }
         public override string ToString()
         {
