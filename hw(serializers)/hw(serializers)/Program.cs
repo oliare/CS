@@ -33,9 +33,9 @@ namespace hw_serializers_
             while (true)
             {
                 Console.Write("\nEnter the currency code >>\n\t1 - EUR \n\t2 - USD\n> ");
-                string userInput = Console.ReadLine();
+                string input = Console.ReadLine();
 
-                if (int.TryParse(userInput, out int choice) && choice >= 1
+                if (int.TryParse(input, out int choice) && choice >= 1
                     && choice <= list.Count)
                 {
                     Currency chosen = list[choice - 1];
