@@ -85,11 +85,11 @@ namespace hw_events_
                     cars[i].Speed += rnd.Next(1, 10);
                 }
 
+                Console.WriteLine(String.Join("\t", cars.Select
+                    (i => $"  {i.Model} ({i.Speed} km/h)")));
+
                 foreach (var car in cars)
                 {
-                    Console.WriteLine(String.Join("\t", cars.Select
-                        (i => $"  {i.Model} ({i.Speed} km/h)")));
-
                     if (car.Finished())
                     {
                         car.IsWinner($"{car} is the WINNER in the '{car.Category}' category");
